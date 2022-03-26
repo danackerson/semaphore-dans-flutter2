@@ -67,7 +67,7 @@ blocks:
           commands:
             - flutter test integration_test/delete_existing_item_test.dart
     run:
-      when: 'change_in(''/lib'', {default_branch: ''main'', pipeline_file: ''ignore''}))'
+      when: 'change_in(''/lib'', {default_branch: ''main'', pipeline_file: ''ignore''})'
   - name: Build artifact
     task:
       prologue:
