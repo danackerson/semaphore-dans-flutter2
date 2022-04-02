@@ -15,6 +15,7 @@ blocks:
           commands:
             - checkout
             - 'cache restore flutter-packages-$SEMAPHORE_GIT_BRANCH-$(checksum pubspec.yaml),flutter-packages-$(checksum pubspec.yaml),flutter-packages'
+            - flutter --version
             - flutter pub get
             - 'cache store flutter-packages-$SEMAPHORE_GIT_BRANCH-$(checksum pubspec.yaml),flutter-packages-$(checksum pubspec.yaml),flutter-packages /root/.pub-cache'
       prologue:
@@ -80,3 +81,8 @@ blocks:
           commands:
             - flutter build ios --no-codesign
             - artifact push job build/ios/iphoneos/Runner.app
+promotions:
+  - name: Deploy to TestFlight
+    pipeline_file: pipeline_2.yml
+    auto_promote:
+      when: branch = 'main' AND result = 'passed'
