@@ -18,8 +18,9 @@ blocks:
             - pwd
             - flutter --version
             - flutter upgrade --verify-only
+            - flutter upgrade
             - flutter pub get
-            - 'cache store flutter-packages-$SEMAPHORE_GIT_BRANCH-$(checksum pubspec.yaml),flutter-packages-$(checksum pubspec.yaml),flutter-packages $(pwd)/.pub-cache'
+            - 'cache store flutter-packages-$SEMAPHORE_GIT_BRANCH-$(checksum pubspec.yaml),flutter-packages-$(checksum pubspec.yaml),flutter-packages pubcache'
       prologue:
         commands:
           - checkout
