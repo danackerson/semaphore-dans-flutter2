@@ -12,9 +12,7 @@ blocks:
           commands:
             - checkout
             - 'cache restore flutter-packages-$SEMAPHORE_GIT_BRANCH-$(checksum pubspec.yaml),flutter-packages-$(checksum pubspec.yaml),flutter-packages'
-            - flutter --version
             - flutter pub get
-            - 'cache store flutter-packages-$SEMAPHORE_GIT_BRANCH-$(checksum pubspec.yaml),flutter-packages-$(checksum pubspec.yaml),flutter-packages'
   - name: Deploy to TestFlight
     task:
       secrets:
