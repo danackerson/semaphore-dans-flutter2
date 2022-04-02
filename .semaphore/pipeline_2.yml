@@ -14,7 +14,7 @@ blocks:
             - 'cache restore flutter-packages-$SEMAPHORE_GIT_BRANCH-$(checksum pubspec.yaml),flutter-packages-$(checksum pubspec.yaml),flutter-packages'
             - flutter --version
             - flutter pub get
-            - 'cache store flutter-packages-$SEMAPHORE_GIT_BRANCH-$(checksum pubspec.yaml),flutter-packages-$(checksum pubspec.yaml),flutter-packages /root/.pub-cache'
+            - 'cache store flutter-packages-$SEMAPHORE_GIT_BRANCH-$(checksum pubspec.yaml),flutter-packages-$(checksum pubspec.yaml),flutter-packages $(pwd)/.pub-cache'
   - name: Deploy to TestFlight
     task:
       secrets:
@@ -28,4 +28,5 @@ blocks:
             - cd ios
             - bundle install
             - cache store
+            - export LC_ALL=en_US.UTF-8 && export LANG=en_US.UTF-8
             - bundle exec fastlane deploy

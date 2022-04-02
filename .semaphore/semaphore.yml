@@ -15,9 +15,11 @@ blocks:
           commands:
             - checkout
             - 'cache restore flutter-packages-$SEMAPHORE_GIT_BRANCH-$(checksum pubspec.yaml),flutter-packages-$(checksum pubspec.yaml),flutter-packages'
+            - pwd
             - flutter --version
+            - flutter upgrade --verify-only
             - flutter pub get
-            - 'cache store flutter-packages-$SEMAPHORE_GIT_BRANCH-$(checksum pubspec.yaml),flutter-packages-$(checksum pubspec.yaml),flutter-packages /root/.pub-cache'
+            - 'cache store flutter-packages-$SEMAPHORE_GIT_BRANCH-$(checksum pubspec.yaml),flutter-packages-$(checksum pubspec.yaml),flutter-packages $(pwd)/.pub-cache'
       prologue:
         commands:
           - checkout
@@ -69,18 +71,6 @@ blocks:
             - flutter test integration_test/delete_existing_item_test.dart
     run:
       when: 'change_in(''/lib'', {default_branch: ''main'', pipeline_file: ''ignore''})'
-  - name: Build artifact
-    task:
-      prologue:
-        commands:
-          - checkout
-          - 'cache restore flutter-packages-$SEMAPHORE_GIT_BRANCH-$(checksum pubspec.yaml),flutter-packages-$(checksum pubspec.yaml),flutter-packages'
-          - flutter pub get
-      jobs:
-        - name: Generate IPA
-          commands:
-            - flutter build ios --no-codesign
-            - artifact push job build/ios/iphoneos/Runner.app
 promotions:
   - name: Deploy to TestFlight
     pipeline_file: pipeline_2.yml
